@@ -61,7 +61,7 @@ TOP_K = _int("TOP_K", 4)
 OLLAMA_URL = _str("OLLAMA_URL", "http://localhost:11434")
 LLM_MODEL = _str("LLM_MODEL", "llama3.1:8b")
 JUDGE_MODEL = _str("JUDGE_MODEL", "llama3.1:8b")
-CONFIDENCE_THRESHOLD = _float("CONFIDENCE_THRESHOLD", 0.0)   # placeholder: calibrate in Phase 6
+CONFIDENCE_THRESHOLD = _float("CONFIDENCE_THRESHOLD", -6.9)   # placeholder: calibrate in Phase 6
 MAX_ANSWER_TOKENS = _int("MAX_ANSWER_TOKENS", 300)     # caps runaway replies from small models
 FALLBACK_MESSAGE = _str(
     "FALLBACK_MESSAGE",
@@ -72,3 +72,15 @@ FALLBACK_MESSAGE = _str(
 # Roles and regions (Module 6.1)
 ROLES = ("employee", "hr")
 REGIONS = ("US", "UK")
+
+# Every setting that changes an answer: logged with each answer and saved with each evaluation run (Module 6.5)
+SETTING_NAMES = (
+    "CHUNK_SIZE", "CHUNK_OVERLAP", "EMBEDDING_MODEL", "DISTANCE",
+    "HNSW_MAX_NEIGHBORS", "HNSW_EF_CONSTRUCTION", "RETRIEVAL_MODE", "USE_RERANKER",
+    "RERANKER_MODEL", "CANDIDATES", "TOP_K", "LLM_MODEL", "JUDGE_MODEL",
+    "CONFIDENCE_THRESHOLD", "MAX_ANSWER_TOKENS",
+)
+
+
+def current_settings():
+    return {name: globals()[name] for name in SETTING_NAMES}
