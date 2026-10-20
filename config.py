@@ -40,6 +40,7 @@ LOG_DIR = ROOT / "logs"
 # Ingestion (Module 2): sizes are in embedding-model tokens
 CHUNK_SIZE = _int("CHUNK_SIZE", 400)
 CHUNK_OVERLAP = _int("CHUNK_OVERLAP", 60)              # 15%
+NEAR_DUP_THRESHOLD = _float("NEAR_DUP_THRESHOLD", 0.6)   # report file pairs at least this similar
 
 # Embeddings and index (Module 3)
 EMBEDDING_MODEL = _str("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5")
