@@ -114,7 +114,7 @@ def show_debug(session, result):
 def show_status(session):
     a = session.asker
     print(f"role={a.role}, region={a.region or 'any'}, archived={'on' if a.include_archived else 'off'}, "
-          f"debug={'on' if session.debug else 'off'}, model={config.LLM_MODEL}")
+          f"debug={'on' if session.debug else 'off'}, model={config.LLM_PROVIDER}:{config.LLM_MODEL}")
 
 
 def parse_switch(args):
@@ -191,7 +191,7 @@ def handle_question(session, question):
 
 def start_up():
     """Check Ollama and warm up the models, so the first question is not slow."""
-    ok, _, fix = verify.check_ollama()
+    ok, _, fix = verify.check_llm()
     if not ok:
         print(f"Warning: answers will fail until this is fixed. {fix}\n")
     print("Loading models (a few seconds)...")

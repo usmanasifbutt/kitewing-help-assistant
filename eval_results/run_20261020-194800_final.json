@@ -1,0 +1,760 @@
+{
+  "label": "final",
+  "time": "2026-10-20T19:48:00",
+  "retrieval_only": false,
+  "settings": {
+    "CHUNK_SIZE": 400,
+    "CHUNK_OVERLAP": 60,
+    "EMBEDDING_MODEL": "BAAI/bge-small-en-v1.5",
+    "DISTANCE": "cosine",
+    "HNSW_MAX_NEIGHBORS": 16,
+    "HNSW_EF_CONSTRUCTION": 200,
+    "RETRIEVAL_MODE": "hybrid",
+    "USE_RERANKER": true,
+    "RERANKER_MODEL": "cross-encoder/ms-marco-MiniLM-L-12-v2",
+    "CANDIDATES": 20,
+    "TOP_K": 4,
+    "LLM_PROVIDER": "openai",
+    "LLM_MODEL": "gpt-4o-mini",
+    "JUDGE_MODEL": "gpt-4o-mini",
+    "CONFIDENCE_THRESHOLD": -6.9,
+    "MAX_ANSWER_TOKENS": 300,
+    "PROMPT_VERSION": "5ec16582"
+  },
+  "summary": {
+    "questions": 17,
+    "passed": 16,
+    "precision": 0.32142857142857145,
+    "recall": 1.0,
+    "mrr": 0.9642857142857143,
+    "faithfulness": 5.0,
+    "relevance": 5.0,
+    "completeness": 4.571428571428571,
+    "leaks": 0
+  },
+  "results": [
+    {
+      "id": "Q01",
+      "category": "lookup",
+      "question": "How many days of paid time off do I get each year?",
+      "expected": "answered",
+      "answer": "Full-time employees receive 20 days of paid time off (PTO) per calendar year. PTO accrues at a rate of 1.67 days per month, and it is prorated for part-time employees or those who join part-way through the year [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot's answer accurately reflects the information provided in the sources, directly addresses the question about paid time off, and includes all necessary details regarding the accrual and prorating of PTO."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-HB-US-p03-c01",
+          "score": 6.837
+        },
+        {
+          "chunk_id": "HR-HB-US-p04-c01",
+          "score": 0.63
+        },
+        {
+          "chunk_id": "HR-HB-US-p05-c02",
+          "score": -2.068
+        },
+        {
+          "chunk_id": "HR-HB-US-p02-c01",
+          "score": -2.736
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 22.2,
+      "problems": []
+    },
+    {
+      "id": "Q02",
+      "category": "lookup",
+      "question": "How long do I have to submit an expense claim?",
+      "expected": "answered",
+      "answer": "You have 45 days from the date of the expense to submit your expense claim in Spendwise. This applies to all employees in both the US and the UK. Claims submitted after this period may not be reimbursed [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 4,
+        "behavior": "answered",
+        "explanation": "The chatbot provided an accurate answer supported by the sources, addressing the timeframe for submitting expense claims. However, it did not mention the requirement for an itemised receipt for expenses over $25 (or £20), which is part of the complete answer."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "FIN-EXP-2025-c01",
+          "score": 1.859
+        },
+        {
+          "chunk_id": "FIN-EXP-2025-c02",
+          "score": 0.216
+        },
+        {
+          "chunk_id": "HR-HB-UK-p04-c01",
+          "score": -3.87
+        },
+        {
+          "chunk_id": "HR-HB-US-p04-c01",
+          "score": -5.899
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 11.2,
+      "problems": []
+    },
+    {
+      "id": "Q03",
+      "category": "keyword: error code",
+      "question": "What does error KSW-2210 mean, and how do I fix it?",
+      "expected": "answered",
+      "answer": "Error KSW-2210 indicates that the Compliance Agent has found that full-disk encryption (FileVault on Mac, BitLocker on Windows) is either turned off or has not completed. Your laptop will be blocked from the corporate network until encryption is finished.\n\nTo fix this, you should turn encryption back on and keep your laptop plugged in until the encryption process is complete. After that, open the Compliance Agent and click \"Re-check now.\" If the issue persists after 24 hours, you should raise a P2 ticket for further assistance [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot's answer accurately reflects the information provided in the sources, addressing the meaning of error KSW-2210 and the steps to resolve it. It includes all necessary details from the reference answer without introducing any inaccuracies."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "IT-SUP-01-c02",
+          "score": 1.85
+        },
+        {
+          "chunk_id": "IT-SUP-01-c01",
+          "score": -0.372
+        },
+        {
+          "chunk_id": "HR-ONB-01-c01",
+          "score": -4.078
+        },
+        {
+          "chunk_id": "IT-SUP-01-c03",
+          "score": -7.278
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 11.6,
+      "problems": []
+    },
+    {
+      "id": "Q04",
+      "category": "keyword: form number",
+      "question": "What is form HR-118 for?",
+      "expected": "answered",
+      "answer": "The sources provided do not contain information about Form HR-118. I recommend contacting the People Team for details regarding this form.",
+      "refused": false,
+      "behavior": "declined",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 1,
+        "behavior": "declined",
+        "explanation": "The chatbot correctly stated that the sources do not contain information about Form HR-118, which is a faithful response. However, it did not attempt to provide any relevant information about the form itself, leading to a low completeness score."
+      },
+      "warnings": [
+        "The answer cites no sources; check it against the documents."
+      ],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-RW-01-c01",
+          "score": -1.495
+        },
+        {
+          "chunk_id": "IT-SUP-01-c03",
+          "score": -8.123
+        },
+        {
+          "chunk_id": "HR-HB-US-p01-c01",
+          "score": -8.853
+        },
+        {
+          "chunk_id": "HR-HB-UK-p01-c01",
+          "score": -8.897
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 10.2,
+      "problems": [
+        "behavior: expected answered, got declined",
+        "low completeness (1)"
+      ]
+    },
+    {
+      "id": "Q05",
+      "category": "region filter (UK)",
+      "question": "How many weeks of paid parental leave does a primary caregiver get?",
+      "expected": "answered",
+      "answer": "A primary caregiver is entitled to up to 52 weeks of parental leave, with the first 26 weeks being paid. During this paid period, they receive 16 weeks at 100% of base pay, followed by 10 weeks at the statutory rate [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot's answer accurately reflects the information provided in the sources, addressing the question directly and including all necessary details about the duration and payment structure of parental leave for primary caregivers."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-HB-UK-p05-c01",
+          "score": 5.596
+        },
+        {
+          "chunk_id": "HR-HB-UK-p04-c01",
+          "score": 1.179
+        },
+        {
+          "chunk_id": "HR-HB-UK-p05-c02",
+          "score": 0.217
+        },
+        {
+          "chunk_id": "HR-HB-UK-p03-c01",
+          "score": -4.349
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 10.2,
+      "problems": []
+    },
+    {
+      "id": "Q06",
+      "category": "chunk boundary",
+      "question": "Am I eligible for parental leave, and how do I apply for it?",
+      "expected": "answered",
+      "answer": "To be eligible for paid parental leave at Kitewing, you must have completed at least 12 months of continuous service and be a regular employee scheduled to work at least 30 hours per week. Both birth and non-birth parents, including adoptive and foster parents, are eligible. Contractors, interns, and temporary staff are not eligible for paid leave, but may qualify for unpaid leave under federal or state law [Source 1].\n\nTo apply for parental leave, submit a request in PeopleHub under Time Off > Leave of Absence > Parental Leave at least 30 days before your intended start date. If the birth or placement occurs earlier than expected, submit the request as soon as possible. Attach a document showing the expected due date or placement date [Source 2].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot provided a comprehensive answer that accurately reflects the eligibility criteria and application process for parental leave as outlined in the sources. All claims are supported by the provided references, and the answer directly addresses the question asked."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-HB-US-p05-c01",
+          "score": 6.018
+        },
+        {
+          "chunk_id": "HR-HB-US-p05-c02",
+          "score": 1.797
+        },
+        {
+          "chunk_id": "HR-HB-US-p04-c01",
+          "score": -3.029
+        },
+        {
+          "chunk_id": "HR-BEN-US-c02",
+          "score": -4.907
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 12.6,
+      "problems": []
+    },
+    {
+      "id": "Q07",
+      "category": "no answer in documents",
+      "question": "What is the copay for a dental check-up?",
+      "expected": "declined",
+      "answer": "I don't have that information in the documents I can access. For HR questions, contact the People Team (people@kitewing.example); for IT questions, contact the IT Helpdesk (it-help@kitewing.example).",
+      "refused": true,
+      "behavior": "declined",
+      "judge": null,
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-BEN-US-c01",
+          "score": -8.573
+        },
+        {
+          "chunk_id": "HR-HB-US-p03-c01",
+          "score": -11.207
+        },
+        {
+          "chunk_id": "HR-BEN-US-c02",
+          "score": -11.212
+        },
+        {
+          "chunk_id": "HR-HB-US-p04-c01",
+          "score": -11.227
+        }
+      ],
+      "retrieval": null,
+      "leaked": [],
+      "seconds": 7.1,
+      "problems": []
+    },
+    {
+      "id": "Q08",
+      "category": "out of scope (prior knowledge)",
+      "question": "Who won the 2022 FIFA World Cup?",
+      "expected": "declined",
+      "answer": "I don't have that information in the documents I can access. For HR questions, contact the People Team (people@kitewing.example); for IT questions, contact the IT Helpdesk (it-help@kitewing.example).",
+      "refused": true,
+      "behavior": "declined",
+      "judge": null,
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-BEN-US-c01",
+          "score": -11.013
+        },
+        {
+          "chunk_id": "FIN-EXP-2025-c01",
+          "score": -11.045
+        },
+        {
+          "chunk_id": "HR-HB-UK-p01-c01",
+          "score": -11.067
+        },
+        {
+          "chunk_id": "HR-HB-UK-p03-c01",
+          "score": -11.11
+        }
+      ],
+      "retrieval": null,
+      "leaked": [],
+      "seconds": 6.7,
+      "problems": []
+    },
+    {
+      "id": "Q09",
+      "category": "false premise",
+      "question": "Since we have unlimited vacation, how do I book three months off?",
+      "expected": "corrected_premise",
+      "answer": "The assumption that Kitewing has unlimited vacation is not correct. According to the Employee Handbook, full-time employees receive 20 days of paid time off (PTO) per calendar year, which accrues monthly. To request PTO, you must do so in PeopleHub, and for absences of three or more consecutive working days, you need to submit your request at least two weeks in advance [Source 1]. If you plan to take three months off, you would need to discuss this with your manager and consider using your PTO, as well as any other leave options available, such as unpaid personal leave [Source 2].",
+      "refused": false,
+      "behavior": "corrected_premise",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "corrected_premise",
+        "explanation": "The chatbot correctly identified the misconception about unlimited vacation and provided accurate information about PTO and the process for requesting time off. It also mentioned the need for manager approval for extended absences, aligning with the sources provided."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-HB-US-p03-c01",
+          "score": -5.148
+        },
+        {
+          "chunk_id": "HR-HB-US-p04-c01",
+          "score": -10.134
+        },
+        {
+          "chunk_id": "HR-ONB-01-c01",
+          "score": -10.453
+        },
+        {
+          "chunk_id": "HR-HB-US-p05-c02",
+          "score": -10.656
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 10.6,
+      "problems": []
+    },
+    {
+      "id": "Q10",
+      "category": "conflict: current only",
+      "question": "What is the daily meal limit on a business trip?",
+      "expected": "answered",
+      "answer": "The daily meal limit on business travel is $75 per day (UK: £60), which covers breakfast, lunch, and dinner. Alcohol is not reimbursable under this limit [Source 2].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot provided a complete and accurate answer regarding the daily meal limit on business travel, including the specific amounts and additional relevant information about alcohol reimbursement, all supported by the sources."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "FIN-EXP-2025-c02",
+          "score": 1.901
+        },
+        {
+          "chunk_id": "FIN-EXP-2025-c01",
+          "score": 1.619
+        },
+        {
+          "chunk_id": "HR-RW-01-c01",
+          "score": -10.454
+        },
+        {
+          "chunk_id": "HR-HB-US-p03-c01",
+          "score": -10.822
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 0.5
+      },
+      "leaked": [],
+      "seconds": 10.1,
+      "problems": []
+    },
+    {
+      "id": "Q11",
+      "category": "conflict: archived included",
+      "question": "What is the daily meal limit on a business trip?",
+      "expected": "answered",
+      "answer": "The daily meal limit on a business trip is $75 per day (UK: £60), covering breakfast, lunch, and dinner. Alcohol is not reimbursable. This limit is stated in the current version of the Travel and Expense Policy [Source 3]. The older version set the limit at $50 per day (UK: £40) [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot provided a complete and accurate answer, including the current daily meal limit and the previous limit, fully aligning with the reference answer and supported by the sources."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "FIN-EXP-2023-c01",
+          "score": 2.026
+        },
+        {
+          "chunk_id": "FIN-EXP-2025-c02",
+          "score": 1.901
+        },
+        {
+          "chunk_id": "FIN-EXP-2025-c01",
+          "score": 1.619
+        },
+        {
+          "chunk_id": "FIN-EXP-2023-c02",
+          "score": -0.999
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 10.6,
+      "problems": []
+    },
+    {
+      "id": "Q12",
+      "category": "access control: employee",
+      "question": "What is the salary band for a Director?",
+      "expected": "declined",
+      "answer": "I don't have that information in the documents I can access. For HR questions, contact the People Team (people@kitewing.example); for IT questions, contact the IT Helpdesk (it-help@kitewing.example).",
+      "refused": true,
+      "behavior": "declined",
+      "judge": null,
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-HB-US-p02-c01",
+          "score": -10.271
+        },
+        {
+          "chunk_id": "HR-HB-UK-p02-c01",
+          "score": -10.358
+        },
+        {
+          "chunk_id": "SEC-POL-01-p01-c01",
+          "score": -10.466
+        },
+        {
+          "chunk_id": "HR-HB-US-p03-c01",
+          "score": -10.976
+        }
+      ],
+      "retrieval": null,
+      "leaked": [],
+      "seconds": 6.5,
+      "problems": []
+    },
+    {
+      "id": "Q13",
+      "category": "access control: HR",
+      "question": "What is the salary band for a Director?",
+      "expected": "answered",
+      "answer": "The salary band for a Director at Kitewing Software is as follows:\n\n- **US**: The base salary band for a Director is US $185,000 to $230,000, with an annual bonus target of 20% of base salary [Source 1].\n- **UK**: The base salary band for a Director is £125,000 to £155,000, with an annual bonus target of 20% of base salary [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot provided a complete and accurate answer regarding the salary band for a Director, including both US and UK figures along with the annual bonus target, all supported by the sources."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-COMP-2025-p01-c01",
+          "score": 5.165
+        },
+        {
+          "chunk_id": "HR-COMP-2025-p01-c02",
+          "score": -6.602
+        },
+        {
+          "chunk_id": "HR-HB-US-p02-c01",
+          "score": -10.271
+        },
+        {
+          "chunk_id": "HR-HB-UK-p02-c01",
+          "score": -10.358
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 11.2,
+      "problems": []
+    },
+    {
+      "id": "Q14",
+      "category": "paraphrase (semantic)",
+      "question": "Will the company help pay for my internet if I work from home?",
+      "expected": "answered",
+      "answer": "Yes, the company provides a remote-work stipend to help pay for internet costs if you work from home. \n\nFor UK employees, the stipend is £30 per month, and for US employees, it is $40 per month. This stipend is paid automatically through payroll, so you do not need to submit a claim for it [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 4,
+        "behavior": "answered",
+        "explanation": "The chatbot accurately answered the question and provided the stipend amounts for both UK and US employees, which is supported by the sources. However, it omitted the information about the one-time home-office equipment allowance, which is part of the complete answer."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "FIN-EXP-2025-c02",
+          "score": 1.233
+        },
+        {
+          "chunk_id": "HR-HB-UK-p07-c01",
+          "score": -1.104
+        },
+        {
+          "chunk_id": "HR-HB-US-p07-c01",
+          "score": -1.557
+        },
+        {
+          "chunk_id": "HR-RW-01-c01",
+          "score": -6.781
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 10.3,
+      "problems": []
+    },
+    {
+      "id": "Q15",
+      "category": "paraphrase (semantic)",
+      "question": "I clicked a link in a weird email and typed in my password. What should I do?",
+      "expected": "answered",
+      "answer": "You should act quickly. First, disconnect your device from the network by turning off Wi-Fi or unplugging the cable. Do not delete the suspicious email, as the Security Team may need it. Then, report the incident within 1 hour by submitting Form IT-412 (Security Incident Report) in KiteDesk. If it's outside office hours, call the IT Helpdesk on extension 4357 and choose option 9. If the Security Team instructs you to, change your password from a different, trusted device. Remember, you will not be disciplined for reporting a mistake promptly, but delaying a report is a breach of policy [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot's answer accurately reflects the information provided in the sources, addressing all key points from the reference answer. It includes steps to take after clicking the link, emphasizes the importance of reporting promptly, and reassures the user about not facing discipline for reporting the incident."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "SEC-POL-01-p02-c01",
+          "score": -1.756
+        },
+        {
+          "chunk_id": "IT-SUP-01-c03",
+          "score": -9.899
+        },
+        {
+          "chunk_id": "IT-SUP-01-c05",
+          "score": -10.153
+        },
+        {
+          "chunk_id": "IT-SUP-01-c04",
+          "score": -10.183
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 11.4,
+      "problems": []
+    },
+    {
+      "id": "Q16",
+      "category": "vague question",
+      "question": "working abroad?",
+      "expected": "answered",
+      "answer": "You can work from a country other than your country of employment for up to 20 working days in any calendar year, but you must obtain approval at least 3 weeks before your travel by submitting Form HR-118 (Work From Abroad Request) in PeopleHub. Some countries may be excluded for security and tax reasons, and you can find the current list on the form. If you wish to work abroad for more than 20 working days in a year, you will need approval from the Legal team [Source 1].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot's answer accurately reflects the information provided in the sources, directly addresses the question about working abroad, and includes all necessary details from the reference answer."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-RW-01-c01",
+          "score": -0.873
+        },
+        {
+          "chunk_id": "HR-RW-01-c02",
+          "score": -4.861
+        },
+        {
+          "chunk_id": "FIN-EXP-2025-c02",
+          "score": -5.054
+        },
+        {
+          "chunk_id": "HR-HB-UK-p03-c01",
+          "score": -6.384
+        }
+      ],
+      "retrieval": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 10.3,
+      "problems": []
+    },
+    {
+      "id": "Q17",
+      "category": "region not set",
+      "question": "How much annual leave do I get?",
+      "expected": "answered",
+      "answer": "In the UK, full-time employees receive 25 days of paid annual leave per holiday year, plus 8 UK bank holidays. Annual leave accrues at 2.08 days per month and is prorated for part-time employees or those who join part-way through the year [Source 1].\n\nIn the US, full-time employees receive 20 days of paid time off (PTO) per calendar year, which accrues at 1.67 days per month and is also prorated for part-time employees or those who join part-way through the year [Source 3].",
+      "refused": false,
+      "behavior": "answered",
+      "judge": {
+        "faithfulness": 5,
+        "relevance": 5,
+        "completeness": 5,
+        "behavior": "answered",
+        "explanation": "The chatbot provided accurate information regarding annual leave for both UK and US employees, directly addressing the question and including all necessary details from the sources."
+      },
+      "warnings": [],
+      "error": null,
+      "chunks": [
+        {
+          "chunk_id": "HR-HB-UK-p03-c01",
+          "score": 5.22
+        },
+        {
+          "chunk_id": "HR-HB-UK-p04-c01",
+          "score": 0.986
+        },
+        {
+          "chunk_id": "HR-HB-US-p03-c01",
+          "score": -0.402
+        },
+        {
+          "chunk_id": "HR-HB-UK-p05-c01",
+          "score": -0.703
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "mrr": 1.0
+      },
+      "leaked": [],
+      "seconds": 10.9,
+      "problems": []
+    }
+  ]
+}

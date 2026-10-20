@@ -8,16 +8,13 @@ from functools import lru_cache
 from itertools import combinations
 from typing import TypedDict
 
-from langchain_ollama import ChatOllama
 from langgraph.graph import END, START, StateGraph
 
 import config
 import index
+import llm
 import retrieve
-
-
-class GenerationProblem(Exception):
-    """A predictable generation problem. The message tells the user what to do next."""
+from llm import GenerationProblem      # also reachable as generate.GenerationProblem (chat.py, evaluate.py)
 
 
 # ------------------------------------------- 5.1 grounding rules (system message)
@@ -98,23 +95,10 @@ def verify_citations(text, n_sources):
     return text, warnings, sorted(set(cited) - set(bad))
 
 
-# ------------------------------------------- the model
-@lru_cache(maxsize=1)
-def get_llm():
-    return ChatOllama(model=config.LLM_MODEL, base_url=config.OLLAMA_URL,
-                      temperature=0, num_predict=config.MAX_ANSWER_TOKENS)
-
-
+# ------------------------------------------- the model (created in llm.py, so a single setting switches provider)
 def call_llm(system, user):
-    try:
-        return get_llm().invoke([("system", system), ("human", user)]).content
-    except Exception as error:                  # predictable problems get a clear message
-        text = str(error).lower()
-        if "connect" in text or "refused" in text:
-            raise GenerationProblem("Ollama is not running. Start the Ollama app (or run: ollama serve) and try again.")
-        if "not found" in text:
-            raise GenerationProblem(f"The model {config.LLM_MODEL} is not downloaded. Run: ollama pull {config.LLM_MODEL}")
-        raise
+    chat_model = llm.get_chat_model(config.LLM_MODEL, config.MAX_ANSWER_TOKENS)
+    return llm.ask(chat_model, [("system", system), ("human", user)])
 
 
 # ------------------------------------------- 5.3 the graph: retrieve -> gate -> generate -> verify

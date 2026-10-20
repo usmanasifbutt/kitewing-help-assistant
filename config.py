@@ -58,10 +58,19 @@ CANDIDATES = _int("CANDIDATES", 20)
 TOP_K = _int("TOP_K", 4)
 
 # Generation (Module 5)
+# One switch for every model call: ollama (local, free, the default) or openai (optional, fast).
+# LLM_MODEL and JUDGE_MODEL always hold the model for the ACTIVE provider, so no other file cares.
+LLM_PROVIDER = _str("LLM_PROVIDER", "ollama").lower()
 OLLAMA_URL = _str("OLLAMA_URL", "http://localhost:11434")
-LLM_MODEL = _str("LLM_MODEL", "llama3.1:8b")
-JUDGE_MODEL = _str("JUDGE_MODEL", "llama3.1:8b")
-CONFIDENCE_THRESHOLD = _float("CONFIDENCE_THRESHOLD", -6.9)   # placeholder: calibrate in Phase 6
+
+if LLM_PROVIDER == "openai":
+    LLM_MODEL = _str("OPENAI_LLM_MODEL", "gpt-4o-mini")
+    JUDGE_MODEL = _str("OPENAI_JUDGE_MODEL", LLM_MODEL)
+else:
+    LLM_MODEL = _str("LLM_MODEL", "llama3.1:8b")
+    JUDGE_MODEL = _str("JUDGE_MODEL", "llama3.1:8b")
+
+CONFIDENCE_THRESHOLD = _float("CONFIDENCE_THRESHOLD", -6.9)   # calibrated from test_questions.json (generate.py --calibrate)
 MAX_ANSWER_TOKENS = _int("MAX_ANSWER_TOKENS", 300)     # caps runaway replies from small models
 FALLBACK_MESSAGE = _str(
     "FALLBACK_MESSAGE",
@@ -77,7 +86,7 @@ REGIONS = ("US", "UK")
 SETTING_NAMES = (
     "CHUNK_SIZE", "CHUNK_OVERLAP", "EMBEDDING_MODEL", "DISTANCE",
     "HNSW_MAX_NEIGHBORS", "HNSW_EF_CONSTRUCTION", "RETRIEVAL_MODE", "USE_RERANKER",
-    "RERANKER_MODEL", "CANDIDATES", "TOP_K", "LLM_MODEL", "JUDGE_MODEL",
+    "RERANKER_MODEL", "CANDIDATES", "TOP_K", "LLM_PROVIDER", "LLM_MODEL", "JUDGE_MODEL",
     "CONFIDENCE_THRESHOLD", "MAX_ANSWER_TOKENS",
 )
 

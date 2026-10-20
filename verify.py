@@ -1,6 +1,7 @@
 """verify.py - setup check (Capstone R7). Each failure says what to do next."""
 import importlib.util
 import json
+import os
 import sys
 import urllib.request
 
@@ -8,11 +9,17 @@ import config
 
 MODULES = {  # import name -> pip name
     "langchain": "langchain", "langchain_chroma": "langchain-chroma",
-    "langchain_huggingface": "langchain-huggingface", "langchain_ollama": "langchain-ollama",
+    "langchain_huggingface": "langchain-huggingface",
     "langgraph": "langgraph", "chromadb": "chromadb",
     "sentence_transformers": "sentence-transformers", "rank_bm25": "rank-bm25",
     "pypdf": "pypdf", "docx2txt": "docx2txt",
 }
+
+
+def required_modules():
+    """The packages needed for the active LLM provider are checked too."""
+    extra = {"langchain_openai": "langchain-openai"} if config.LLM_PROVIDER == "openai" else {"langchain_ollama": "langchain-ollama"}
+    return {**MODULES, **extra}
 
 
 def check_python():
@@ -21,7 +28,7 @@ def check_python():
 
 
 def check_packages():
-    missing = [pip for mod, pip in MODULES.items() if importlib.util.find_spec(mod) is None]
+    missing = [pip for mod, pip in required_modules().items() if importlib.util.find_spec(mod) is None]
     return not missing, "Required packages installed", f"Run: pip install -r requirements.txt (missing: {', '.join(missing)})"
 
 
@@ -36,9 +43,20 @@ def check_ollama():
     return True, f"Ollama running, {config.LLM_MODEL} available", ""
 
 
+def check_openai():
+    if not os.environ.get("OPENAI_API_KEY"):
+        return False, "OPENAI_API_KEY is set", "Add OPENAI_API_KEY to your .env file, or switch back with LLM_PROVIDER=ollama."
+    return True, f"OpenAI selected, model {config.LLM_MODEL}, API key found", ""
+
+
+def check_llm():
+    """Checks whichever language-model provider is switched on (LLM_PROVIDER)."""
+    return check_openai() if config.LLM_PROVIDER == "openai" else check_ollama()
+
+
 def main():
     failed = 0
-    for check in (check_python, check_packages, check_ollama):
+    for check in (check_python, check_packages, check_llm):
         ok, label, fix = check()
         print(("[ OK ] " if ok else "[FAIL] ") + label)
         if not ok:
