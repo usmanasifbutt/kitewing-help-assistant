@@ -46,6 +46,9 @@ NEAR_DUP_THRESHOLD = _float("NEAR_DUP_THRESHOLD", 0.6)   # report file pairs at 
 EMBEDDING_MODEL = _str("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5")
 COLLECTION_NAME = _str("COLLECTION_NAME", "kitewing")
 DISTANCE = "cosine"                                    # fixed: what bge was trained for
+EMBED_BATCH_SIZE = _int("EMBED_BATCH_SIZE", 32)
+HNSW_MAX_NEIGHBORS = _int("HNSW_MAX_NEIGHBORS", 16)          # "m": edges per node
+HNSW_EF_CONSTRUCTION = _int("HNSW_EF_CONSTRUCTION", 200)     # search depth while building
 
 # Retrieval (Module 4)
 RETRIEVAL_MODE = _str("RETRIEVAL_MODE", "hybrid")      # semantic | keyword | hybrid

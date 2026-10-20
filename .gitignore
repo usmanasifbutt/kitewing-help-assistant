@@ -22,6 +22,7 @@ chroma_index/
 # Logs and runtime output (eval_results/ is kept: it is part of the submission)
 logs/
 *.log
+cleaned_preview.txt
 chunks_preview.txt
 
 # Submission zip, editor and OS files
@@ -30,4 +31,4 @@ chunks_preview.txt
 .idea/
 .DS_Store
 Thumbs.db
-cleaned_preview.txt
+
