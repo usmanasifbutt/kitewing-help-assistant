@@ -1,7 +1,75 @@
+# ---------------------------------------------------------------
+# Secrets and local configuration: never commit these
+# ---------------------------------------------------------------
 .env
+.env.*
+# the template (no real values) IS committed
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials*.json
+*.token
+
+# ---------------------------------------------------------------
+# Python environments and caches
+# ---------------------------------------------------------------
 .venv/
+venv/
+env/
 __pycache__/
-*.pyc
-chroma_db/
+*.py[cod]
+*.egg-info/
+build/
+dist/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------
+# Generated data: rebuilt from the documents by index.py (large)
+# ---------------------------------------------------------------
+chroma_index/
+chroma_db/
+*.sqlite3
+*.db
+
+# ---------------------------------------------------------------
+# Downloaded models and weights (large; fetched on first use)
+# ---------------------------------------------------------------
+models/
+.cache/
+huggingface/
+*.bin
+*.safetensors
+*.gguf
+*.onnx
+*.pt
+*.pth
+*.ckpt
+
+# ---------------------------------------------------------------
+# Runtime output: interaction and feedback logs may hold user questions
+# eval_results/ is NOT ignored: two saved runs are part of the submission
+# ---------------------------------------------------------------
+logs/
+*.log
+chunks_preview.txt
+
+# ---------------------------------------------------------------
+# Packaging: the submission zip is built at the end, not committed
+# ---------------------------------------------------------------
+*.zip
+*.tar.gz
+
+# ---------------------------------------------------------------
+# Editor and OS files
+# ---------------------------------------------------------------
 .vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,266 @@
+{
+  "about": [
+    "The test question set (Module 1.4: 'your evaluation set'; Module 4.4: 'a golden set').",
+    "Each question says who is asking (region, role, include_archived), how the chatbot should behave",
+    "(answer, decline, or correct_premise), and which documents hold the answer.",
+    "'evidence' lists the passages a complete answer needs. A retrieved chunk 'holds' a passage if it comes",
+    "from that source file and contains that exact text. We use text, not chunk IDs, because chunk IDs",
+    "change whenever you change CHUNK_SIZE - this way the test set keeps working while you experiment.",
+    "'reference_answer' is what a person would accept; the judge in evaluate.py compares against it.",
+    "Add your own questions in the same format. Real questions from real users are the best ones (Module 1.4)."
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "category": "lookup",
+      "teaches": "Module 4.4 - a straightforward lookup: the baseline every system should pass.",
+      "question": "How many days of paid time off do I get each year?",
+      "region": "US",
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Employee-Handbook-US.pdf"],
+      "evidence": [
+        {"source": "Employee-Handbook-US.pdf", "contains": "20 days of paid time off"}
+      ],
+      "reference_answer": "Full-time US employees get 20 days of paid time off (PTO) per calendar year, accruing at 1.67 days per month and prorated for part-time employees."
+    },
+    {
+      "id": "Q02",
+      "category": "lookup",
+      "teaches": "Module 4.4 - a straightforward lookup in a Word document.",
+      "question": "How long do I have to submit an expense claim?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Expense-Policy-2025.docx"],
+      "evidence": [
+        {"source": "Expense-Policy-2025.docx", "contains": "within 45 days of the date of the expense"}
+      ],
+      "reference_answer": "Expense claims must be submitted in Spendwise within 45 days of the date of the expense, with an itemised receipt for any single expense over $25 (UK: £20)."
+    },
+    {
+      "id": "Q03",
+      "category": "keyword: error code",
+      "teaches": "Module 4.1 - exact codes are where keyword (BM25) search earns its place next to semantic search.",
+      "question": "What does error KSW-2210 mean, and how do I fix it?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["IT-Support-Guide.md"],
+      "evidence": [
+        {"source": "IT-Support-Guide.md", "contains": "KSW-2210: Disk encryption check failed"}
+      ],
+      "reference_answer": "KSW-2210 means the disk encryption compliance check failed: FileVault (Mac) or BitLocker (Windows) is off or hasn't finished, so the laptop is blocked from the corporate network. Turn encryption back on, leave the laptop plugged in until it finishes, then click 'Re-check now' in the Compliance Agent. If the code still shows after 24 hours, raise a P2 ticket."
+    },
+    {
+      "id": "Q04",
+      "category": "keyword: form number",
+      "teaches": "Module 4.1 - a form number that lives in an HR policy, while most other forms are in the IT guide.",
+      "question": "What is form HR-118 for?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Remote-Work-Policy.md"],
+      "evidence": [
+        {"source": "Remote-Work-Policy.md", "contains": "Form HR-118 (Work From Abroad Request)"}
+      ],
+      "reference_answer": "Form HR-118 is the Work From Abroad Request. You submit it in PeopleHub at least 3 weeks before travelling if you want to work from a country other than your country of employment (allowed for up to 20 working days a year)."
+    },
+    {
+      "id": "Q05",
+      "category": "region filter (UK)",
+      "teaches": "Modules 2.4 and 4.2 - the US and UK handbooks are worded almost identically; only the region filter keeps the US numbers out of a UK answer.",
+      "question": "How many weeks of paid parental leave does a primary caregiver get?",
+      "region": "UK",
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Employee-Handbook-UK.pdf"],
+      "evidence": [
+        {"source": "Employee-Handbook-UK.pdf", "contains": "The first 26 weeks are paid"}
+      ],
+      "reference_answer": "In the UK, primary caregivers can take up to 52 weeks of parental leave. The first 26 weeks are paid: 16 weeks at 100% of base pay, then 10 weeks at the statutory rate."
+    },
+    {
+      "id": "Q06",
+      "category": "chunk boundary",
+      "teaches": "Modules 1.5 and 2.3 - eligibility and how to apply sit several paragraphs apart, so a complete answer needs two chunks.",
+      "question": "Am I eligible for parental leave, and how do I apply for it?",
+      "region": "US",
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Employee-Handbook-US.pdf"],
+      "evidence": [
+        {"source": "Employee-Handbook-US.pdf", "contains": "at least 12 months of continuous service"},
+        {"source": "Employee-Handbook-US.pdf", "contains": "at least 30 days before your intended start date"}
+      ],
+      "reference_answer": "You're eligible if you have at least 12 months of continuous service on the expected date of birth or placement and are a regular employee scheduled to work at least 30 hours a week (contractors, interns and temporary staff are not eligible). To apply, submit a request in PeopleHub (Time Off > Leave of Absence > Parental Leave) at least 30 days before your intended start date, attaching the expected due date or placement document. Your HR Business Partner confirms in writing within five working days."
+    },
+    {
+      "id": "Q07",
+      "category": "no answer in documents",
+      "teaches": "Module 5.3 - nothing in the documents covers dental. The medical copays in the Benefits Guide are a tempting near-miss.",
+      "question": "What is the copay for a dental check-up?",
+      "region": "US",
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "decline",
+      "expected_sources": [],
+      "evidence": [],
+      "reference_answer": "The documents don't cover dental insurance, so the chatbot should say it doesn't have that information. It must not offer a medical copay as if it were the dental one."
+    },
+    {
+      "id": "Q08",
+      "category": "out of scope (prior knowledge)",
+      "teaches": "Module 5.4 - 'prior-knowledge bait': the model knows this from training, but it isn't in the documents.",
+      "question": "Who won the 2022 FIFA World Cup?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "decline",
+      "expected_sources": [],
+      "evidence": [],
+      "reference_answer": "This isn't in the company documents, so a grounded chatbot should decline, even though the model knows the answer."
+    },
+    {
+      "id": "Q09",
+      "category": "false premise",
+      "teaches": "Module 5.4 - the question assumes unlimited vacation, which the handbook contradicts.",
+      "question": "Since we have unlimited vacation, how do I book three months off?",
+      "region": "US",
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "correct_premise",
+      "expected_sources": ["Employee-Handbook-US.pdf"],
+      "evidence": [
+        {"source": "Employee-Handbook-US.pdf", "contains": "20 days of paid time off"}
+      ],
+      "reference_answer": "Kitewing doesn't offer unlimited vacation: US employees get 20 days of PTO per year, so three months of paid vacation isn't available. Requests for more than 10 consecutive working days also need department-head approval."
+    },
+    {
+      "id": "Q10",
+      "category": "conflict: current only",
+      "teaches": "Modules 4.2 and 5.5 - the archived 2023 expense policy is filtered out before search, so the conflict never reaches the model.",
+      "question": "What is the daily meal limit on a business trip?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Expense-Policy-2025.docx"],
+      "evidence": [
+        {"source": "Expense-Policy-2025.docx", "contains": "$75 per day"}
+      ],
+      "reference_answer": "The daily meal limit on business travel is $75 per day (UK: £60), under the 2025 Travel and Expense Policy."
+    },
+    {
+      "id": "Q11",
+      "category": "conflict: archived included",
+      "teaches": "Module 5.5 - both versions are retrieved and disagree. The prompt must make the model prefer the newer one and say that they conflict.",
+      "question": "What is the daily meal limit on a business trip?",
+      "region": null,
+      "role": "employee",
+      "include_archived": true,
+      "expected_behavior": "answer",
+      "expected_sources": ["Expense-Policy-2025.docx", "Expense-Policy-2023.docx"],
+      "evidence": [
+        {"source": "Expense-Policy-2025.docx", "contains": "$75 per day"},
+        {"source": "Expense-Policy-2023.docx", "contains": "$50 per day"}
+      ],
+      "reference_answer": "$75 per day (UK: £60) under the current 2025 policy. The older 2023 policy said $50 per day (UK: £40), but the 2025 version replaced it. A good answer gives $75 and mentions that the older version differs."
+    },
+    {
+      "id": "Q12",
+      "category": "access control: employee",
+      "teaches": "Module 6.1 - the compensation bands are restricted. For an employee the filter removes them before search, so the fallback answers.",
+      "question": "What is the salary band for a Director?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "decline",
+      "expected_sources": [],
+      "evidence": [],
+      "reference_answer": "An employee can't see the restricted compensation document, so the chatbot should say it doesn't have that information, without revealing that the document exists."
+    },
+    {
+      "id": "Q13",
+      "category": "access control: HR",
+      "teaches": "Module 6.1 - the same question asked by someone in HR, who is allowed to see restricted documents.",
+      "question": "What is the salary band for a Director?",
+      "region": null,
+      "role": "hr",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Leadership-Compensation-Bands-2025.pdf"],
+      "evidence": [
+        {"source": "Leadership-Compensation-Bands-2025.pdf", "contains": "Base salary band for a Director"}
+      ],
+      "reference_answer": "The Director base salary band is $185,000 to $230,000 in the US and £125,000 to £155,000 in the UK, with an annual bonus target of 20% of base salary."
+    },
+    {
+      "id": "Q14",
+      "category": "paraphrase (semantic)",
+      "teaches": "Modules 4.1 and 4.3 - the policy says 'remote-work stipend', not 'help pay for internet'. Meaning, not keywords.",
+      "question": "Will the company help pay for my internet if I work from home?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Expense-Policy-2025.docx"],
+      "evidence": [
+        {"source": "Expense-Policy-2025.docx", "contains": "remote-work stipend of $40 per month"}
+      ],
+      "reference_answer": "Yes. Employees designated hybrid or remote get a remote-work stipend of $40 per month (UK: £30) towards internet and utility costs, paid automatically through payroll. There's also a one-time home-office equipment allowance of up to $500 (UK: £400)."
+    },
+    {
+      "id": "Q15",
+      "category": "paraphrase (semantic)",
+      "teaches": "Module 4.1 - 'clicked a weird link' has to be matched to 'reporting security incidents' and 'phishing'.",
+      "question": "I clicked a link in a weird email and typed in my password. What should I do?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Information-Security-Policy.pdf", "IT-Support-Guide.md"],
+      "evidence": [
+        {"source": "Information-Security-Policy.pdf", "contains": "Report the incident within 1 hour"}
+      ],
+      "reference_answer": "Disconnect from the network (turn off Wi-Fi), don't delete the email, and report it within 1 hour using Form IT-412 (Security Incident Report) in KiteDesk, or call extension 4357 and choose option 9 out of hours. Change your password from a different, trusted device if Security asks you to. You won't be disciplined for reporting promptly."
+    },
+    {
+      "id": "Q16",
+      "category": "vague question",
+      "teaches": "Module 4.5 - a two-word question. Try turning on USE_HYDE in config.py and compare.",
+      "question": "working abroad?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Remote-Work-Policy.md"],
+      "evidence": [
+        {"source": "Remote-Work-Policy.md", "contains": "up to 20 working days in any calendar year"}
+      ],
+      "reference_answer": "You can work from a country other than your country of employment for up to 20 working days in a calendar year, with approval at least 3 weeks before travelling via Form HR-118 in PeopleHub. More than 20 days needs Legal approval as well."
+    },
+    {
+      "id": "Q17",
+      "category": "region not set",
+      "teaches": "Module 5.5 - a legitimate difference, not a stale document. With no region set, the answer should give both, clearly attributed.",
+      "question": "How much annual leave do I get?",
+      "region": null,
+      "role": "employee",
+      "include_archived": false,
+      "expected_behavior": "answer",
+      "expected_sources": ["Employee-Handbook-US.pdf", "Employee-Handbook-UK.pdf"],
+      "evidence": [
+        {"source": "Employee-Handbook-US.pdf", "contains": "20 days of paid time off"},
+        {"source": "Employee-Handbook-UK.pdf", "contains": "25 days of paid annual leave"}
+      ],
+      "reference_answer": "It depends on the office: US employees get 20 days of PTO per year; UK employees get 25 days of annual leave plus 8 bank holidays. A good answer gives both and says which applies to whom (or asks which office the person is in)."
+    }
+  ]
+}

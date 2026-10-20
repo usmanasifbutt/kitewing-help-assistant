@@ -1,0 +1,11 @@
+file,doc_id,title,doc_type,department,region,access_level,status,last_updated
+Employee-Handbook-US.pdf,HR-HB-US,Employee Handbook (US),handbook,HR,US,internal,current,2025-01-06
+Employee-Handbook-UK.pdf,HR-HB-UK,Employee Handbook (UK),handbook,HR,UK,internal,current,2025-01-06
+Benefits-Guide-US-2025.docx,HR-BEN-US,2025 Benefits Guide (US),guide,HR,US,internal,current,2025-01-01
+Expense-Policy-2023.docx,FIN-EXP-2023,Travel and Expense Policy v3.0 (2023),policy,Finance,Global,internal,archived,2023-02-01
+Expense-Policy-2025.docx,FIN-EXP-2025,Travel and Expense Policy v4.0 (2025),policy,Finance,Global,internal,current,2025-03-01
+Leadership-Compensation-Bands-2025.pdf,HR-COMP-2025,Leadership Compensation Bands FY2025,reference,HR,Global,restricted,current,2025-02-15
+Information-Security-Policy.pdf,SEC-POL-01,Information Security Policy,policy,IT,Global,internal,current,2024-11-01
+IT-Support-Guide.md,IT-SUP-01,IT Support Guide,knowledge article,IT,Global,internal,current,2025-04-10
+Remote-Work-Policy.md,HR-RW-01,Remote Work Policy,policy,HR,Global,internal,current,2025-02-01
+New-Starter-Onboarding.md,HR-ONB-01,New Starter Onboarding Guide,guide,HR,Global,internal,current,2025-03-15
