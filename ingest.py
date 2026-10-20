@@ -12,10 +12,12 @@ from itertools import combinations
 
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from transformers import AutoTokenizer
 from langchain_community.document_loaders import Docx2txtLoader, PyPDFLoader, TextLoader
 
 import config
+import models
+import problems
+from models import get_tokenizer
 
 # ---------------------------------------------------------------- 2.1 loading
 def load_file(path):
@@ -28,17 +30,27 @@ def load_file(path):
 
 
 def load_all():
+    if not config.DOCS_DIR.is_dir():
+        raise problems.Problem(f"The documents folder was not found ({config.DOCS_DIR}). "
+                               f"Put the Kitewing files in a folder named 'documents' next to the scripts.")
     docs = []
     for path in sorted(config.DOCS_DIR.iterdir()):
         if path.suffix.lower() not in (".pdf", ".docx", ".md"):
             continue
-        for doc in load_file(path):
+        try:
+            loaded = load_file(path)
+        except Exception as error:                  # one damaged file must not stop the others
+            print(f"  warning: skipped {path.name}, it could not be read ({type(error).__name__})")
+            continue
+        for doc in loaded:
             doc.metadata["source_file"] = path.name
             if path.suffix.lower() == ".pdf":
                 doc.metadata["page"] += 1          # loader counts from 0; people count from 1
             else:
                 doc.metadata.pop("page", None)     # Word and Markdown have no pages
             docs.append(doc)
+    if not docs:
+        raise problems.Problem(f"No PDF, Word or Markdown files were found in {config.DOCS_DIR}.")
     return docs
 
 
@@ -114,6 +126,9 @@ def clean_text(text, is_pdf):
 
 # ------------------------------------------------------- 2.4 catalog and tagging
 def load_catalog():
+    if not config.CATALOG_PATH.is_file():
+        raise problems.Problem(f"catalog.csv was not found ({config.CATALOG_PATH}). "
+                               f"It must sit next to the scripts: it holds each document's metadata.")
     with open(config.CATALOG_PATH, encoding="utf-8", newline="") as f:
         return {row["file"]: row for row in csv.DictReader(f)}
 
@@ -171,9 +186,6 @@ def find_near_duplicates(groups, threshold):
 
 
 # ------------------------------------------------------- 2.2 / 2.3 chunking
-@lru_cache(maxsize=1)
-def get_tokenizer():
-    return AutoTokenizer.from_pretrained(config.EMBEDDING_MODEL)
 
 
 def count_tokens(text):
@@ -270,4 +282,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    problems.run(main)

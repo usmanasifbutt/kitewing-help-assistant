@@ -7,6 +7,7 @@ import time
 from datetime import datetime
 
 import config
+import problems
 import generate
 import index
 import llm
@@ -301,4 +302,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    problems.run(main)

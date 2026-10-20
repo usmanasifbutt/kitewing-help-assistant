@@ -4,6 +4,7 @@ Values come from the environment (.env file) and fall back to the defaults below
 so the project also runs with no .env at all. Other scripts import from this file.
 """
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -16,12 +17,21 @@ def _str(name, default):
     return os.environ.get(name, default)
 
 
+def _number(name, default, kind):
+    """Read a numeric setting. A typo in .env ends with one clear line, not a stack trace."""
+    raw = os.environ.get(name, default)
+    try:
+        return kind(raw)
+    except ValueError:
+        sys.exit(f"\nProblem: the setting {name} must be a number, but it is '{raw}'. Fix it in your .env file.")
+
+
 def _int(name, default):
-    return int(os.environ.get(name, default))
+    return _number(name, default, int)
 
 
 def _float(name, default):
-    return float(os.environ.get(name, default))
+    return _number(name, default, float)
 
 
 def _bool(name, default):

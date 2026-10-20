@@ -8,6 +8,7 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime
 
 import config
+import problems
 import generate
 import index
 import retrieve
@@ -230,4 +231,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    problems.run(main)

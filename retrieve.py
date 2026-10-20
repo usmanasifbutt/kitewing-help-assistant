@@ -8,9 +8,11 @@ from typing import Optional
 
 from langchain_core.documents import Document
 from rank_bm25 import BM25Okapi
-from sentence_transformers import CrossEncoder
 
 import config
+import models
+import problems
+from models import get_reranker
 import index
 
 
@@ -91,9 +93,6 @@ def rrf(lists, k=60):
 
 
 # --------------------------------------------------------- 4.3 re-ranking
-@lru_cache(maxsize=1)
-def get_reranker():
-    return CrossEncoder(config.RERANKER_MODEL)
 
 
 def rerank(query, docs, top_k):
@@ -149,4 +148,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    problems.run(main)

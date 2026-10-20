@@ -11,6 +11,7 @@ from typing import TypedDict
 from langgraph.graph import END, START, StateGraph
 
 import config
+import problems
 import index
 import llm
 import retrieve
@@ -226,4 +227,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    problems.run(main)

@@ -8,9 +8,10 @@ import os
 from functools import lru_cache
 
 import config
+import problems
 
 
-class GenerationProblem(Exception):
+class GenerationProblem(problems.Problem):
     """A predictable model problem. The message tells the user what to do next."""
 
 
@@ -49,8 +50,8 @@ def explain(error):
     if "connect" in text or "refused" in text:
         return GenerationProblem("Ollama is not running. Start the Ollama app (or run: ollama serve) and try again.")
     if "not found" in text:
-        return GenerationProblem(f"The model is not downloaded. Run: ollama pull {config.LLM_MODEL}  "
-                                 f"(and ollama pull {config.JUDGE_MODEL} for the judge)")
+        models = " and ".join(dict.fromkeys((config.LLM_MODEL, config.JUDGE_MODEL)))
+        return GenerationProblem(f"A model is not downloaded in Ollama. Run: ollama pull <name> for each of: {models}")
     return None
 
 

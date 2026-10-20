@@ -11,23 +11,20 @@ import time
 from datetime import datetime
 
 from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
 
 import config
+import models
+import problems
 import ingest
 
 POINTER = config.INDEX_DIR / "CURRENT"
 INFO_FILE = "index_info.json"
 
 
-class IndexProblem(Exception):
+class IndexProblem(problems.Problem):
     """A predictable index problem. The message tells the user what to do next."""
 
 
-def get_embeddings():
-    # Normalised vectors + cosine distance: what bge-small was trained for (Module 3.1)
-    return HuggingFaceEmbeddings(model_name=config.EMBEDDING_MODEL,
-                                 encode_kwargs={"normalize_embeddings": True})
 
 
 def hnsw_config():
@@ -49,7 +46,7 @@ def build_index():
     new_dir = config.INDEX_DIR / version
     try:
         store = Chroma(collection_name=config.COLLECTION_NAME,
-                       embedding_function=get_embeddings(),
+                       embedding_function=models.get_embeddings(),
                        persist_directory=str(new_dir),
                        collection_configuration=hnsw_config())
         step = config.EMBED_BATCH_SIZE
@@ -99,7 +96,7 @@ def open_index():
             f"{config.EMBEDDING_MODEL}. Vectors from different models can't be compared. "
             f"Rebuild the index: python index.py")
     store = Chroma(collection_name=config.COLLECTION_NAME,
-                   embedding_function=get_embeddings(),
+                   embedding_function=models.get_embeddings(),
                    persist_directory=str(config.INDEX_DIR / version),
                    create_collection_if_not_exists=False)
     return store, info
@@ -123,4 +120,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    problems.run(main)
