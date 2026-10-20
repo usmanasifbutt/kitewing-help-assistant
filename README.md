@@ -96,10 +96,13 @@ Do the steps in order. Each one has a check, and `python verify.py` at the end t
 ```
 python verify.py     # checks everything and says how to fix anything that fails
 python index.py      # reads the documents and builds the search index (a minute or two)
+python verify.py     # run it again: now all seven checks pass
 python chat.py       # start asking questions
 ```
 
-`verify.py` should print seven `[ OK ]` lines. The first run downloads the embedding model and re-ranker (about 0.26 GB), so it needs an internet connection and can take a few minutes.
+The first time you run `verify.py`, six checks pass and the last one (the search index) fails with "No index found". That is expected: building the index is the next step. After `python index.py`, run `verify.py` again and you should see seven `[ OK ]` lines and "All checks passed."
+
+The first run also downloads the embedding model and re-ranker (about 0.26 GB), so it needs an internet connection and can take a few minutes.
 
 ## Using the chatbot
 
@@ -246,6 +249,7 @@ Start with `python verify.py`: it checks the common causes in order and says wha
 | "No index found" | Run `python index.py` |
 | "The index was built with a different embedding model" or "chunk size" | Run `python index.py` to rebuild it with your current settings |
 | A model "could not be downloaded or loaded" | The first run needs the internet to download about 0.26 GB. On a company network that inspects HTTPS traffic, downloads from huggingface.co can fail: try a different network, or download once at home. After the first download the project works offline |
+| Starting is very slow and the screen fills with "Retrying" or "Could not reach the Hub" | You have no (or a poor) internet connection, and each model file is retried several times before the downloaded copy is used. Once the models have been downloaded, tell the libraries not to go online: PowerShell `$env:HF_HUB_OFFLINE="1"`, macOS/Linux `export HF_HUB_OFFLINE=1` |
 | Answers are very slow | The model is too big for your computer. Use `llama3.2:3b`, and close other large programs. Use `evaluate.py --retrieval-only` for quick checks |
 | Out of memory | Use `llama3.2:3b`, and make sure no other large model is loaded in Ollama (`ollama ps`, then `ollama stop <name>`) |
 | Strange characters on Windows | Use Windows Terminal or PowerShell 7. The scripts already write UTF-8 |
