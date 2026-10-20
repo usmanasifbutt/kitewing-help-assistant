@@ -62,6 +62,12 @@ OLLAMA_URL = _str("OLLAMA_URL", "http://localhost:11434")
 LLM_MODEL = _str("LLM_MODEL", "llama3.1:8b")
 JUDGE_MODEL = _str("JUDGE_MODEL", "llama3.1:8b")
 CONFIDENCE_THRESHOLD = _float("CONFIDENCE_THRESHOLD", 0.0)   # placeholder: calibrate in Phase 6
+MAX_ANSWER_TOKENS = _int("MAX_ANSWER_TOKENS", 300)     # caps runaway replies from small models
+FALLBACK_MESSAGE = _str(
+    "FALLBACK_MESSAGE",
+    "I don't have that information in the documents I can access. "
+    "For HR questions, contact the People Team (people@kitewing.example); "
+    "for IT questions, contact the IT Helpdesk (it-help@kitewing.example).")
 
 # Roles and regions (Module 6.1)
 ROLES = ("employee", "hr")
