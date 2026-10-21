@@ -195,7 +195,7 @@ All settings live in `config.py`. Any of them can be overridden in your `.env` f
 | `CANDIDATES` | 20 | How many candidates the first search stage finds |
 | `TOP_K` | 4 | How many chunks are sent to the language model |
 | `CONFIDENCE_THRESHOLD` | -6.9 | Minimum re-ranker score needed to answer. Below it the chatbot refuses without calling the model. Chosen from the test set with `python generate.py --calibrate` |
-| `LLM_MODEL`, `JUDGE_MODEL` | `llama3.2:3b` in `.env.example` | The answering model and the grading model |
+| `LLM_MODEL`, `JUDGE_MODEL` | `llama3.2:3b` | The answering model and the grading model |
 | `MAX_ANSWER_TOKENS` | 300 | Caps the length of each answer |
 
 If you have 16 GB of RAM or more, you can try a larger model for better answers: `ollama pull llama3.1:8b`, then set `LLM_MODEL=llama3.1:8b` in `.env`.

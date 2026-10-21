@@ -77,8 +77,8 @@ if LLM_PROVIDER == "openai":
     LLM_MODEL = _str("OPENAI_LLM_MODEL", "gpt-4o-mini")
     JUDGE_MODEL = _str("OPENAI_JUDGE_MODEL", LLM_MODEL)
 else:
-    LLM_MODEL = _str("LLM_MODEL", "llama3.1:8b")
-    JUDGE_MODEL = _str("JUDGE_MODEL", "llama3.1:8b")
+    LLM_MODEL = _str("LLM_MODEL", "llama3.2:3b")          # suits an 8 GB laptop; use llama3.1:8b with 16 GB or more
+    JUDGE_MODEL = _str("JUDGE_MODEL", "llama3.2:3b")
 
 CONFIDENCE_THRESHOLD = _float("CONFIDENCE_THRESHOLD", -6.9)   # calibrated from test_questions.json (generate.py --calibrate)
 MAX_ANSWER_TOKENS = _int("MAX_ANSWER_TOKENS", 300)     # caps runaway replies from small models
